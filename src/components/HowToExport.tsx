@@ -15,7 +15,7 @@ export function HowToExport({ compact = false }: { compact?: boolean }) {
         <li>
           Une fois connecté, ouvrez le lien DPR dans le <strong>même navigateur</strong> :{" "}
           <a href={DPR_JSON_URL} target="_blank" rel="noopener noreferrer">
-            cfspart.impots.gouv.fr/enp/dpr.do
+            cfspart.impots.gouv.fr/enp/accueilensupres.do
           </a>
         </li>
         <li>
