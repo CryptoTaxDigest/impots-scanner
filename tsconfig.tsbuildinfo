@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/dropzone.tsx","./src/components/howtoexport.tsx","./src/components/resultspanel.tsx","./src/parser/index.test.ts","./src/parser/index.ts","./src/parser/mappers.ts","./src/parser/types.ts"],"version":"5.9.3"}

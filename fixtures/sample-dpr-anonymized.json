@@ -1,0 +1,33 @@
+{
+  "annee": 2025,
+  "millésime": 2025,
+  "formulaires": {
+    "3916": {
+      "comptes": [
+        {
+          "type": "bancaire",
+          "nomEtablissement": "REVOLUT PAYMENTS UAB",
+          "pays": "LT",
+          "numeroCompte": "LT60REDACTED1234",
+          "dateOuverture": "2019-03-15"
+        },
+        {
+          "type": "actifs_numeriques",
+          "nomPSAN": "BINANCE France SAS",
+          "pays": "FR",
+          "url": "https://www.binance.com",
+          "numeroCompte": "REDACTED@example.com",
+          "dateOuverture": "2020-06-01"
+        },
+        {
+          "type": "bancaire",
+          "nomEtablissement": "N26 BANK AG",
+          "pays": "DE",
+          "iban": "DE89REDACTED37040044",
+          "dateOuverture": "2018-11-02",
+          "dateCloture": "2023-04-01"
+        }
+      ]
+    }
+  }
+}
