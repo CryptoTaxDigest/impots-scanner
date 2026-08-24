@@ -9,7 +9,7 @@ import {
 } from "./ind-compte-etranger";
 import { accountFromRecord, dedupeAccounts, pickString } from "./mappers";
 
-export const DPR_JSON_URL = "https://cfspart.impots.gouv.fr/enp/accueilensupres.do";
+export const DPR_JSON_URL = "https://cfspart.impots.gouv.fr/enp/dpr.do";
 
 const FORM_HINTS = ["3916", "3916B", "3916-BIS", "3916BIS", "3916-bis"];
 const ACCOUNT_ARRAY_KEYS = [
