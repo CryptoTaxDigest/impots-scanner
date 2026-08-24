@@ -4,6 +4,8 @@ import {
   extractAnnRev,
   extractIndCompteEtranger,
   extractIndCompteEtrangerFromText,
+  extractMailDec1,
+  extractMailDec1FromText,
 } from "./ind-compte-etranger";
 import { accountFromRecord, dedupeAccounts, pickString } from "./mappers";
 
@@ -62,12 +64,13 @@ export async function scanJsonText(text: string, sourceLabel = "collage"): Promi
         "JSON invalide. Copiez l'intégralité de la page (Ctrl+A) depuis le lien DPR une fois connecté.",
       );
     }
-    warnings.push("JSON partiel — seul indCompteEtranger a pu être lu.");
+    warnings.push("JSON partiel — seuls indCompteEtranger et mailDec1 ont pu être lus.");
     return buildScanResult(null, {
       fileName: sourceLabel,
       format: "dpr",
       warnings,
       indCompteEtranger: indOnly,
+      mailDec1: extractMailDec1FromText(trimmed),
     });
   }
 
@@ -85,6 +88,7 @@ function buildScanResult(
     format: ScanResult["metadata"]["format"];
     warnings: string[];
     indCompteEtranger?: "0" | "1" | null;
+    mailDec1?: string;
   },
 ): ScanResult {
   const parsedAt = new Date().toISOString();
@@ -93,6 +97,7 @@ function buildScanResult(
     opts.indCompteEtranger ?? (jsonPayload ? extractIndCompteEtranger(jsonPayload) : null);
 
   const annRev = jsonPayload ? extractAnnRev(jsonPayload) : undefined;
+  const mailDec1 = opts.mailDec1 ?? (jsonPayload ? extractMailDec1(jsonPayload) : undefined);
   const taxYears = jsonPayload ? extractTaxYears(jsonPayload) : annRev ? [annRev] : [];
   const accounts = jsonPayload ? extractAccounts(jsonPayload) : [];
 
@@ -120,6 +125,7 @@ function buildScanResult(
     warnings,
     indCompteEtranger,
     annRev,
+    mailDec1,
     metadata: {
       fileName: opts.fileName,
       parsedAt,

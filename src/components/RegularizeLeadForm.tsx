@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const LEADS_API =
   import.meta.env.VITE_LEADS_API ?? "https://widgets.cryptotaxdigest.com/api/leads";
@@ -7,10 +7,20 @@ function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 }
 
-export function RegularizeLeadForm({ annRev }: { annRev?: string }) {
-  const [email, setEmail] = useState("");
+export function RegularizeLeadForm({
+  annRev,
+  defaultEmail,
+}: {
+  annRev?: string;
+  defaultEmail?: string;
+}) {
+  const [email, setEmail] = useState(defaultEmail ?? "");
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (defaultEmail) setEmail(defaultEmail);
+  }, [defaultEmail]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();

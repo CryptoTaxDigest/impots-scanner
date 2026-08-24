@@ -2,6 +2,26 @@
 export type IndCompteEtranger = "0" | "1";
 
 const IND_REGEX = /"indCompteEtranger"\s*:\s*"([01])"/;
+const MAIL_REGEX = /"mailDec1"\s*:\s*"([^"]+)"/;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function normalizeEmail(value: unknown): string | undefined {
+  if (typeof value !== "string") return undefined;
+  const email = value.trim();
+  return EMAIL_RE.test(email) ? email : undefined;
+}
+
+export function extractMailDec1FromText(text: string): string | undefined {
+  const match = text.match(MAIL_REGEX);
+  return match ? normalizeEmail(match[1]) : undefined;
+}
+
+export function extractMailDec1(payload: unknown): string | undefined {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    return undefined;
+  }
+  return normalizeEmail((payload as Record<string, unknown>).mailDec1);
+}
 
 export function extractIndCompteEtrangerFromText(text: string): IndCompteEtranger | null {
   const match = text.match(IND_REGEX);

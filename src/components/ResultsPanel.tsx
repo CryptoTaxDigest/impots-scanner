@@ -65,7 +65,7 @@ export function ResultsPanel({
   onDownload: () => void;
   embed: boolean;
 }) {
-  const { accounts, warnings, metadata, indCompteEtranger, annRev } = result;
+  const { accounts, warnings, metadata, indCompteEtranger, annRev, mailDec1 } = result;
   const cryptoCount = accounts.filter((a) => a.kind === "crypto").length;
   const bankCount = accounts.filter((a) => a.kind === "bank").length;
 
@@ -73,7 +73,9 @@ export function ResultsPanel({
     <section className="panel results" aria-live="polite">
       <VerdictBanner result={result} />
 
-      {indCompteEtranger === "1" && <RegularizeLeadForm annRev={annRev} />}
+      {indCompteEtranger === "1" && (
+        <RegularizeLeadForm annRev={annRev} defaultEmail={mailDec1} />
+      )}
 
       {accounts.length > 0 && (
         <>

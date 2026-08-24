@@ -23,6 +23,8 @@ export interface ScanResult {
   /** DPR flag: "1" = foreign account known to DGFiP, "0" = none flagged. */
   indCompteEtranger: "0" | "1" | null;
   annRev?: string;
+  /** DPR email on file (mailDec1) — used to prefill regularization form, never sent unless submitted. */
+  mailDec1?: string;
   metadata: {
     fileName: string;
     parsedAt: string;

@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   extractIndCompteEtranger,
   extractIndCompteEtrangerFromText,
+  extractMailDec1,
+  extractMailDec1FromText,
 } from "./ind-compte-etranger";
 import { scanFile, scanJsonText } from "./index";
 
@@ -55,6 +57,10 @@ describe("indCompteEtranger", () => {
     expect(extractIndCompteEtrangerFromText(blob)).toBe("1");
     expect(extractIndCompteEtrangerFromText('  "indCompteEtranger": "0"  ')).toBe("0");
   });
+  it("reads mailDec1 from JSON for email prefill", () => {
+    expect(extractMailDec1(FIXTURE_DPR_IND)).toBe("jane.doe@example.com");
+    expect(extractMailDec1FromText(JSON.stringify(FIXTURE_DPR_IND))).toBe("jane.doe@example.com");
+  });
 });
 
 describe("scanJsonText", () => {
@@ -62,6 +68,7 @@ describe("scanJsonText", () => {
     const result = await scanJsonText(JSON.stringify(FIXTURE_DPR_IND));
     expect(result.indCompteEtranger).toBe("1");
     expect(result.annRev).toBe("2025");
+    expect(result.mailDec1).toBe("jane.doe@example.com");
   });
 
   it("returns ok verdict when indCompteEtranger is 0", async () => {
