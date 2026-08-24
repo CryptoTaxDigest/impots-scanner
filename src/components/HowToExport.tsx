@@ -22,13 +22,17 @@ export function HowToExport({ compact = false }: { compact?: boolean }) {
           Si un JSON s&apos;affiche : sélectionnez tout (<kbd>Ctrl+A</kbd> / <kbd>Cmd+A</kbd>), copiez, et
           collez ci-dessus.
         </li>
-        <li>L&apos;analyse reste sur votre appareil — seul le champ <code>indCompteEtranger</code> détermine le verdict.</li>
+        <li>
+          L&apos;analyse reste sur votre appareil — seuls <code>indCompteEtranger</code> (verdict) et{" "}
+          <code>mailDec1</code> (préremplissage e-mail pour la procédure de régularisation) sont utilisés.
+        </li>
       </ol>
       {!compact && (
         <p className="muted">
           <code>indCompteEtranger</code> vaut <strong>1</strong> quand l&apos;administration sait déjà
           qu&apos;un compte à l&apos;étranger vous est rattaché (CRS, FATCA, déclarations passées…).{" "}
-          <strong>0</strong> = rien de signalé dans vos données préremplies.
+          <strong>0</strong> = rien de signalé. <code>mailDec1</code> sert uniquement à préremplir votre
+          e-mail si vous demandez la procédure — rien n&apos;est envoyé sans votre accord.
         </p>
       )}
     </section>

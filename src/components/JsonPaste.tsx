@@ -19,7 +19,7 @@ export function JsonPaste({
         className="json-paste__input"
         rows={6}
         spellCheck={false}
-        placeholder='{"annRev":"2025", ... "indCompteEtranger":"0"}'
+        placeholder='{"annRev":"2025", "mailDec1":"vous@exemple.fr", "indCompteEtranger":"0"}'
         value={text}
         onChange={(e) => setText(e.target.value)}
         disabled={loading}
@@ -45,8 +45,9 @@ export function JsonPaste({
         )}
       </div>
       <p className="muted json-paste__hint">
-        Copiez toute la page (Ctrl+A / Cmd+A) une fois le JSON affiché — seul{" "}
-        <code>indCompteEtranger</code> est lu pour le verdict.
+        Copiez toute la page (Ctrl+A / Cmd+A) une fois le JSON affiché — seuls{" "}
+        <code>indCompteEtranger</code> (verdict) et <code>mailDec1</code> (préremplissage de la demande de
+        procédure de régularisation) sont lus.
       </p>
     </div>
   );

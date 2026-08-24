@@ -117,8 +117,9 @@ export function App({ embed = false }: { embed?: boolean }) {
         </p>
         {!embed && (
           <p className="footer__note">
-            Les logiciels listent ce que <em>vous</em> devez déclarer. Ce scan lit ce que{" "}
-            <em>l&apos;État</em> a déjà enregistré dans <code>indCompteEtranger</code>.
+            Les logiciels listent ce que <em>vous</em> devez déclarer. Ce scan lit{" "}
+            <code>indCompteEtranger</code> et <code>mailDec1</code> — verdict local, e-mail prérempli si
+            besoin.
           </p>
         )}
       </footer>
