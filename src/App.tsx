@@ -1,7 +1,8 @@
 import { useCallback, useMemo, useState } from "react";
 import type { ScanResult } from "./parser/types";
-import { buildReportMarkdown, scanFile } from "./parser/index";
+import { buildReportMarkdown, DPR_JSON_URL, scanFile, scanJsonText } from "./parser/index";
 import { DropZone } from "./components/DropZone";
+import { JsonPaste } from "./components/JsonPaste";
 import { ResultsPanel } from "./components/ResultsPanel";
 import { HowToExport } from "./components/HowToExport";
 
@@ -9,8 +10,8 @@ export const COPY = {
   iframeTitle: "Ce que l'État sait sur vous — scan comptes étrangers (3916-BIS)",
   headline: "Ce que l'État sait déjà sur vous",
   lead:
-    "Vous savez ce que vous devez déclarer. Mais savez-vous ce que l'administration a déjà enregistré ? Uploadez votre export impots.gouv — résultat en local, rien n'est envoyé.",
-  leadEmbed: "Comptes à l'étranger · 3916-BIS · scan local en 30 secondes",
+    "Connectez-vous sur impots.gouv, ouvrez le lien DPR, collez le JSON — en 30 secondes vous savez si l'administration a déjà un compte à l'étranger à votre nom.",
+  leadEmbed: "Comptes à l'étranger · indCompteEtranger · analyse locale",
   hook: "Fermez l'écart d'information avant votre déclaration.",
 } as const;
 
@@ -26,6 +27,20 @@ export function App({ embed = false }: { embed?: boolean }) {
     try {
       const bytes = await file.arrayBuffer();
       const scan = await scanFile({ fileName: file.name, bytes });
+      setResult(scan);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Erreur lors de l'analyse.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const handleJson = useCallback(async (text: string) => {
+    setLoading(true);
+    setError(null);
+    setResult(null);
+    try {
+      const scan = await scanJsonText(text);
       setResult(scan);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Erreur lors de l'analyse.");
@@ -66,16 +81,32 @@ export function App({ embed = false }: { embed?: boolean }) {
         </header>
       )}
 
-      <section className="panel">
+      <section className="panel panel--steps">
+        <div className="steps">
+          <a className="steps__link btn btn--secondary" href={DPR_JSON_URL} target="_blank" rel="noopener noreferrer">
+            1. Ouvrir le lien DPR (connecté)
+          </a>
+          <span className="steps__arrow" aria-hidden="true">
+            →
+          </span>
+          <span className="steps__label">2. Coller le JSON</span>
+        </div>
+        <JsonPaste onAnalyze={handleJson} loading={loading} />
+        {error && (
+          <p className="error" role="alert">
+            {error}
+          </p>
+        )}
+      </section>
+
+      <section className="panel panel--alt">
+        <p className="muted panel__alt-label">Ou importez un fichier exporté</p>
         <DropZone onFile={handleFile} loading={loading} />
-        {error && <p className="error" role="alert">{error}</p>}
       </section>
 
       {!result && !loading && <HowToExport compact={embed} />}
 
-      {result && (
-        <ResultsPanel result={result} onDownload={downloadReport} embed={embed} />
-      )}
+      {result && <ResultsPanel result={result} onDownload={downloadReport} embed={embed} />}
 
       <footer className="footer">
         <p>
@@ -86,8 +117,8 @@ export function App({ embed = false }: { embed?: boolean }) {
         </p>
         {!embed && (
           <p className="footer__note">
-            Les logiciels listent ce que <em>vous</em> devez déclarer. Ce scan montre ce que{" "}
-            <em>l&apos;État</em> a déjà enregistré — déclarations passées, CRS/FATCA, données préremplies.
+            Les logiciels listent ce que <em>vous</em> devez déclarer. Ce scan lit ce que{" "}
+            <em>l&apos;État</em> a déjà enregistré dans <code>indCompteEtranger</code>.
           </p>
         )}
       </footer>

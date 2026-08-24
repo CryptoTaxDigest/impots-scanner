@@ -20,6 +20,9 @@ export interface ScanResult {
   accounts: ForeignAccount[];
   taxYears: string[];
   warnings: string[];
+  /** DPR flag: "1" = foreign account known to DGFiP, "0" = none flagged. */
+  indCompteEtranger: "0" | "1" | null;
+  annRev?: string;
   metadata: {
     fileName: string;
     parsedAt: string;

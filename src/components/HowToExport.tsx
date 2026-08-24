@@ -1,35 +1,34 @@
+import { DPR_JSON_URL } from "../parser/index";
+
 export function HowToExport({ compact = false }: { compact?: boolean }) {
   return (
     <section className={`panel howto${compact ? " howto--compact" : ""}`}>
-      <h2>Comment obtenir votre export</h2>
+      <h2>Comment obtenir le JSON</h2>
       <ol>
         <li>
           Connectez-vous sur{" "}
           <a href="https://www.impots.gouv.fr" target="_blank" rel="noopener noreferrer">
             impots.gouv.fr
+          </a>{" "}
+          (FranceConnect ou numéro fiscal).
+        </li>
+        <li>
+          Une fois connecté, ouvrez le lien DPR dans le <strong>même navigateur</strong> :{" "}
+          <a href={DPR_JSON_URL} target="_blank" rel="noopener noreferrer">
+            cfspart.impots.gouv.fr/enp/dpr.do
           </a>
         </li>
         <li>
-          Depuis votre espace particulier, ouvrez la déclaration de revenus ou la rubrique{" "}
-          <strong>« Déclaration par un tiers »</strong> (export DPR JSON).
+          Si un JSON s&apos;affiche : sélectionnez tout (<kbd>Ctrl+A</kbd> / <kbd>Cmd+A</kbd>), copiez, et
+          collez ci-dessus.
         </li>
-        <li>
-          Téléchargez le fichier <code>.json</code> des données préremplies, ou votre export de données
-          personnelles au format <code>.zip</code> si disponible.
-        </li>
-        <li>Déposez-le ci-dessus — l&apos;analyse reste sur votre appareil.</li>
+        <li>L&apos;analyse reste sur votre appareil — seul le champ <code>indCompteEtranger</code> détermine le verdict.</li>
       </ol>
       {!compact && (
         <p className="muted">
-          L&apos;export DPR contient les informations que l&apos;administration préremplit, y compris les
-          comptes à l&apos;étranger déjà connus (formulaires 3916 / 3916-BIS).{" "}
-          <a
-            href="https://www.impots.gouv.fr/sites/default/files/media/1_metier/3_partenaire/edi/cdc_edi_ir/edi-ir-vol-iii_2025-04-v2-4.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation EDI-IR (DGFiP)
-          </a>
+          <code>indCompteEtranger</code> vaut <strong>1</strong> quand l&apos;administration sait déjà
+          qu&apos;un compte à l&apos;étranger vous est rattaché (CRS, FATCA, déclarations passées…).{" "}
+          <strong>0</strong> = rien de signalé dans vos données préremplies.
         </p>
       )}
     </section>

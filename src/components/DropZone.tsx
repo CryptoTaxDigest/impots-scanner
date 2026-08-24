@@ -49,9 +49,9 @@ export function DropZone({
         <p>Analyse en cours…</p>
       ) : (
         <>
-          <p className="dropzone__title">Uploadez votre export impots.gouv</p>
+          <p className="dropzone__title">Importez un export impots.gouv</p>
           <p className="dropzone__hint">
-            Découvrez quels comptes à l&apos;étranger l&apos;État connaît déjà — analyse 100&nbsp;% locale
+            Fichier <code>.json</code> DPR ou archive <code>.zip</code> — analyse 100&nbsp;% locale
           </p>
           <button type="button" className="btn btn--secondary" onClick={(e) => e.stopPropagation()}>
             Choisir un fichier

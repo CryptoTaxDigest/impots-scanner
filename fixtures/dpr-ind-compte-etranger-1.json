@@ -1,0 +1,17 @@
+{
+  "annRev": "2025",
+  "spiDec1": "303346435XXXX",
+  "nmNaiDec1": "DOE",
+  "prnmDec1": "JANE",
+  "dateNaisDec1": "01011990",
+  "lieuNaisDec1": "75 PARIS",
+  "rib": {
+    "ribIban": "FR76XXXX0000000000000000000",
+    "ribBic": "BANKFRPP"
+  },
+  "mailDec1": "jane.doe@example.com",
+  "telDec1": "0600000000",
+  "sitFam": "C",
+  "codes_revenus": [{ "code": "1AJ", "valeur": "40800" }],
+  "indCompteEtranger": "1"
+}
